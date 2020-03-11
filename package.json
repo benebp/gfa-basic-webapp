@@ -1,0 +1,15 @@
+{
+  "name": "useless",
+  "version": "1.0.0",
+  "description": "really just a useless webapp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["useless", "webapp"],
+  "author": "benebp",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
