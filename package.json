@@ -4,12 +4,17 @@
   "description": "really just a useless webapp",
   "main": "server.js",
   "scripts": {
+    "test": "node test.js",
     "start": "node server.js"
   },
-  "keywords": ["useless", "webapp"],
+  "keywords": [
+    "useless",
+    "webapp"
+  ],
   "author": "benebp",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "tape": "^4.13.2"
   }
 }
