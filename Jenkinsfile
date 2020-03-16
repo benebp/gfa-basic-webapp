@@ -8,10 +8,10 @@ pipeline {
             }
         }
         stage('deploy') {
-            steps {
-                sh 'docker build -t benebp/malacok-27'
-                sh 'docker push benebp/malacok-27'
-            }
+            docker.build("benebp/malacok-27")
+            docker.withRegistry('https://registry.hub.docker.com', 'benebp-dockerhub') {
+            // app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
     }
 }
