@@ -25,7 +25,7 @@ pipeline {
         stage('deploy to aws ebs') {
             steps {
                 withAWS(credentials:"benebp-aws", region:"eu-west-3") {
-                sh 'aws s3 cp ./Dockerrun.aws.json s3:/benebp-statichtml/Dockerrun.aws.json'
+                sh 'aws s3 cp ./Dockerrun.aws.json s3://benebp-statichtml/Dockerrun.aws.json'
                 sh 'aws elasticbeanstalk create-application-version \
                 --application-name "malacok-27" --version-label "$BUILD_ID" \
                 --source-bundle S3Bucket="benebp-statichtml",S3Key="Dockerrun.aws.json" \
