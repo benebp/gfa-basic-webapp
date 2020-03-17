@@ -13,10 +13,10 @@ pipeline {
         stage('deploy to dockerhub') {
             steps {
                 script{
-                    image = docker.build("benebp/malacok-27")
+                    image = docker.build("benebp/malacok-27:latest")
                 }
                 script{
-                    docker.withRegistry('', "benebp-dockerhub:latest"){
+                    docker.withRegistry('', "benebp-dockerhub"){
                         image.push()
                     }
                 }
