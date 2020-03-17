@@ -16,7 +16,7 @@ pipeline {
                     image = docker.build("benebp/malacok-27")
                 }
                 script{
-                    docker.withRegistry('', "benebp-dockerhub"){
+                    docker.withRegistry('', "benebp-dockerhub:latest"){
                         image.push()
                     }
                 }
