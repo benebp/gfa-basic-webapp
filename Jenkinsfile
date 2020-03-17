@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         image = ""
-        bucketname = ???
+        // bucketname = ???
     }
     stages {
         stage('build') {
