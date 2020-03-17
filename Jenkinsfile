@@ -2,14 +2,12 @@ pipeline {
     agent any
     environment {
         image = ""
-        // bucketname = ???
     }
     stages {
         stage('build') {
             steps {
                 sh 'npm install'
                 sh 'npm run test'
-                sh 'echo "building done, tests OK"'
             }
         }
         stage('deploy to dockerhub') {
@@ -22,14 +20,19 @@ pipeline {
                         image.push()
                     }
                 }
-                steps {
-                    sh 'echo "deploying to dockerhub done"'
-                }
             }
         }
         stage('deploy to aws ebs') {
             steps {
-                sh 'echo "deploying to aws ebs done"'
+                withAWS(credentials:"benebp-aws", region:"eu-west-3") {
+                sh 'aws s3 cp ./dockerrun.aws.json s3://benebp-statichtml/Dockerrun.aws.json'
+                sh 'aws elasticbeanstalk create-application-version \
+                --application-name "malacok-27" --version-label "$BUILD_ID" \
+                --source-bundle S3Bucket="benebp-statichtml",S3Key="Dockerrun.aws.json" \
+                --auto-create-application'
+                sh 'aws elasticbeanstalk update-environment --application-name "malacok-27" \
+                --environment-name "malacok27-env"'
+                }
             }
         }
     }
@@ -65,18 +68,18 @@ pipeline {
 //       }
 
 //     }
-//     stage('Deploy to ElasticBeanstalk') {
-//       steps {
-//         withAWS(credentials:"exampleid", region:"eu-west-3") {
-//           sh 'aws s3 cp ./dockerrun.aws.json s3://${bucketname}/$BUILD_ID/dockerrun.aws.json'
-//           sh 'aws elasticbeanstalk create-application-version \
-//           --application-name "examplePipeline" --version-label "$BUILD_ID" \
-//           --source-bundle S3Bucket="${bucketname}",S3Key="$BUILD_ID/dockerrun.aws.json" \
-//           --auto-create-application'
-//           sh 'aws elasticbeanstalk update-environment --application-name "examplePipeline" \
-//           --environment-name "examplepipeline-dev" '
-//         }
-//       }
-//     }
+    // stage('Deploy to ElasticBeanstalk') {
+    //   steps {
+    //     withAWS(credentials:"exampleid", region:"eu-west-3") {
+    //       sh 'aws s3 cp ./dockerrun.aws.json s3://${bucketname}/$BUILD_ID/dockerrun.aws.json'
+    //       sh 'aws elasticbeanstalk create-application-version \
+    //       --application-name "examplePipeline" --version-label "$BUILD_ID" \
+    //       --source-bundle S3Bucket="${bucketname}",S3Key="$BUILD_ID/dockerrun.aws.json" \
+    //       --auto-create-application'
+    //       sh 'aws elasticbeanstalk update-environment --application-name "examplePipeline" \
+    //       --environment-name "examplepipeline-dev" '
+    //     }
+    //   }
+    // }
 //   }
 // }
