@@ -13,16 +13,18 @@ pipeline {
             }
         }
         stage('deploy to dockerhub') {
-            script{
-                image = docker.build("benebp/malacok-27")
-            }
-            script{
-                docker.withRegistry('', "benebp-dockerhub"){
-                    image.push()
-                }
-            }
             steps {
-                sh 'echo "deploying to dockerhub done"'
+                script{
+                    image = docker.build("benebp/malacok-27")
+                }
+                script{
+                    docker.withRegistry('', "benebp-dockerhub"){
+                        image.push()
+                    }
+                }
+                steps {
+                    sh 'echo "deploying to dockerhub done"'
+                }
             }
         }
         stage('deploy to aws ebs') {
