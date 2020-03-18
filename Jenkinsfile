@@ -31,7 +31,7 @@ pipeline {
                 --source-bundle S3Bucket="benebp-statichtml",S3Key="Dockerrun.aws.json" \
                 --auto-create-application'
                 sh 'aws elasticbeanstalk update-environment --application-name "malacok-27" \
-                --environment-name "malacok27-env"'
+                --environment-name "malacok27-env" --version-label "$BUILD_ID"'
                 }
             }
         }
