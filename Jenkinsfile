@@ -4,6 +4,9 @@ pipeline {
         image = ""
     }
     stages {
+        when {
+            branch 'master'
+        }
         stage('build') {
             steps {
                 sh 'npm install'
@@ -33,6 +36,17 @@ pipeline {
                 sh 'aws elasticbeanstalk update-environment --application-name "malacok-27" \
                 --environment-name "malacok27-env" --version-label "$GIT_COMMIT"'
                 }
+            }
+        }
+    }
+    stages {
+        when {
+            branch 'dev'
+        }
+        stage('build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run test'
             }
         }
     }
