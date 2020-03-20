@@ -1,14 +1,14 @@
 {
-  "name": "useless",
+  "name": "basic",
   "version": "1.0.0",
-  "description": "really just a useless webapp",
+  "description": "basic webapp",
   "main": "server.js",
   "scripts": {
     "test": "node test.js",
     "start": "node server.js"
   },
   "keywords": [
-    "useless",
+    "basic",
     "webapp"
   ],
   "author": "benebp",
