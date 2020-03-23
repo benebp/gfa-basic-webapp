@@ -5,7 +5,7 @@ const app = express();
 const PORT = 3000;
 
 app.get('/', (req, res) => {
-  res.send('keep it simple');
+  res.send('master(production) branch');
 });
 
 app.listen(PORT);
